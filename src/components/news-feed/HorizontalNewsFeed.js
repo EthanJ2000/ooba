@@ -17,7 +17,9 @@ const HorizontalNewsFeed = () => {
 
   const getArticles = async () => {
     try {
-      let articles = await fetch(url);
+      let articles = await fetch(url).catch((err) => {
+        console.log(err);
+      });
       let result = await articles.json();
       return result.articles;
     } catch (err) {
@@ -98,13 +100,14 @@ const expandArticle = (url) => {
 const styles = StyleSheet.create({
   feedContainer: {
     marginTop: 10,
+    marginBottom: 5,
     marginHorizontal: 20,
     width: 320,
     height: 150,
     borderRadius: 25,
     elevation: 3,
     alignSelf: "center",
-    paddingBottom: 1,
+    backgroundColor: "#F0F0F0",
   },
   title: {
     fontSize: 20,

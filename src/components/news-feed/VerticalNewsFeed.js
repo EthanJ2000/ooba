@@ -17,8 +17,11 @@ const VerticalNewsFeed = () => {
 
   const getArticles = async () => {
     try {
-      let articles = await fetch(url);
+      let articles = await fetch(url).catch((err) => {
+        console.log(err);
+      });
       let result = await articles.json();
+      console.log(result);
       return result.articles;
     } catch (err) {
       console.log(err);
@@ -101,6 +104,8 @@ const styles = StyleSheet.create({
     elevation: 1,
     marginTop: 10,
     backgroundColor: "#F0F0F0",
+    borderWidth: 1,
+    borderColor: "#D7D7D7",
   },
   title: {
     fontSize: 20,

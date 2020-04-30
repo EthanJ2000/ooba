@@ -3,15 +3,16 @@ import { View, Text, StyleSheet, FlatList } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { AntDesign } from "@expo/vector-icons";
 
-const Menu = ({ renderScreen, closeMenu }) => {
+const Menu = ({ renderScreen }) => {
   const options = ["Faqs", "Advice", "Contact", "My Profile", "Log Out"];
+
   return (
     <View style={styles.more}>
       <View style={styles.moreHeader}>
         <Text style={styles.moreText}>More</Text>
         <TouchableOpacity
           onPress={() => {
-            closeMenu();
+            console.log("close");
           }}
         >
           <AntDesign name="closecircleo" style={styles.close} />
@@ -19,7 +20,7 @@ const Menu = ({ renderScreen, closeMenu }) => {
       </View>
       <FlatList
         data={options}
-        keyExtractor={(item) => item.title}
+        keyExtractor={(item) => item}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
@@ -40,9 +41,9 @@ const Menu = ({ renderScreen, closeMenu }) => {
 
 const styles = StyleSheet.create({
   more: {
-    height: 300,
-    marginTop: 10,
-    width: "100%",
+    minHeight: 300,
+    maxHeight: 350,
+    minWidth: "100%",
     backgroundColor: "#3B5D5D",
     borderTopStartRadius: 20,
     borderTopEndRadius: 20,
