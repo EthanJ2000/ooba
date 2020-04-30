@@ -1,38 +1,55 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  View,
+  AsyncStorage,
+  Animated,
+  PanResponder,
+} from "react-native";
 import CardPopUp from "../components/CardPopUp";
-
-// Screens
-import Faqs from "../components/more-components/Faqs";
-import Advice from "../components/more-components/Advice";
-import Contact from "../components/more-components/Contact";
-import MyProfile from "../components/more-components/MyProfile";
+import MoreComponent from "../components/MoreComponent";
 
 const MoreScreen = ({ navigation }) => {
-  const [screen, setScreen] = useState(null);
-  const [isVisible, setIsVisible] = useState(true);
-  navigation.addListener("didFocus", (payload) => {
-    setIsVisible(true);
+  //Animation Stuff
+  const position = new Animated.ValueXY();
+  const panResponder = PanResponder.create({
+    onMoveShouldSetPanResponder: (event, gesture) => {
+      const { dx, dy } = gesture;
+      return dx > 2 || dx < -2 || dy > 2 || dy < -2;
+    },
+    onPanResponderMove: (event, gesture) => {
+      if (gesture.moveY > 430 && gesture.moveY < 685) {
+        position.setValue({ x: 0, y: gesture.moveY });
+      }
+
+      console.log(gesture);
+    },
+    onPanResponderRelease: () => {},
   });
+
+  //Animation Stuff
+
+  const [screen, setScreen] = useState(null);
 
   const renderScreen = (item) => {
     setScreen(item);
   };
 
-  const closeMenu = () => {
-    setIsVisible(!isVisible);
-  };
-
   const renderSwitch = (screen) => {
     switch (screen) {
       case "Faqs":
-        return <Faqs style={styles.text} />;
+        return <MoreComponent title="FAQs" />;
       case "Advice":
-        return <Advice />;
+        return <MoreComponent title="Advice" />;
       case "Contact":
-        return <Contact />;
+        return <MoreComponent title="Contact" />;
       case "My Profile":
-        return <MyProfile />;
+        return <MoreComponent title="My Profile" />;
+      case "Log Out": {
+        AsyncStorage.removeItem("fb_token");
+        navigation.navigate("AuthScreen");
+        break;
+      }
 
       default:
         break;
@@ -41,21 +58,24 @@ const MoreScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {screen ? renderSwitch(screen) : null}
-      {isVisible ? (
-        <CardPopUp
-          screen="more"
-          renderScreen={renderScreen}
-          closeMenu={() => {
-            closeMenu();
-          }}
-        />
-      ) : null}
+      {screen ? renderSwitch(screen) : <View />}
+      <Animated.View
+        style={[styles.animatedView, position.getLayout()]}
+        {...panResponder.panHandlers}
+      >
+        <CardPopUp screen="more" renderScreen={renderScreen} />
+      </Animated.View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  animatedView: {
+    position: "absolute",
+    bottom: 0,
+    minHeight: 300,
+    minWidth: "100%",
+  },
   container: {
     height: "100%",
     width: "100%",

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component } from "react";
+import React from "react";
 import { StyleSheet, Text, View, Animated } from "react-native";
 import HorizontalNewsFeed from "../components/news-feed/HorizontalNewsFeed";
 import VerticalNewsFeed from "../components/news-feed/VerticalNewsFeed";

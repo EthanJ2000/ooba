@@ -8,10 +8,10 @@ const SplashScreen = ({ navigation }) => {
       showSkipButton={true}
       data={slides}
       onDone={() => {
-        navigation.navigate("Dashboard");
+        navigation.navigate("AuthScreen");
       }}
       onSkip={() => {
-        navigation.navigate("Dashboard");
+        navigation.navigate("AuthScreen");
       }}
       renderItem={renderItem}
     />
@@ -30,15 +30,15 @@ const renderItem = ({ item }) => {
     >
       <Image source={item.logo} style={styles.logo} />
       <Image source={item.image} style={styles.image} />
-      <Text style={styles.title}>{item.title.toString()}</Text>
-      <Text style={styles.text}>{item.text.toString()}</Text>
+      <Text style={styles.title}>{item.title}</Text>
+      <Text style={styles.text}>{item.text}</Text>
     </View>
   );
 };
 
 const slides = [
   {
-    key: 1,
+    key: "1",
     title: "Welcome!",
     text: "We've created an improved experience with new and updated features.",
     image: require("../../assets/carousel_1.png"),
@@ -46,7 +46,7 @@ const slides = [
     backgroundColor: "#6ABD45",
   },
   {
-    key: 2,
+    key: "2",
     title: "Notifications",
     text:
       "We've included in-app notifications to keep you updated on everything.",
@@ -55,7 +55,7 @@ const slides = [
     backgroundColor: "#F48473",
   },
   {
-    key: 3,
+    key: "3",
     title: "Prequalify",
     text:
       "Before you start house hunting, you can get prequalified right here in the app",
@@ -66,7 +66,6 @@ const slides = [
 ];
 
 const styles = StyleSheet.create({
-  logo: {},
   title: {
     color: "white",
     fontWeight: "bold",

@@ -3,25 +3,21 @@ import { StyleSheet, Text, View, ScrollView, TextInput } from "react-native";
 import CalculatorGroup from "../components/CalculatorGroup";
 import CalculateButton from "../components/CalculateButton";
 import CardPopUp from "../components/CardPopUp";
-
 const CalculatorScreen = () => {
   const [purchasePrice, setPurchasePrice] = useState(0);
   const [yearsToPay, setYearsToPay] = useState(5);
   const [interestRate, setInterestRate] = useState(7.0);
   const [deposit, setDeposit] = useState(0);
   const [totalMonthlyRepayment, setTotalMonthlyRepayment] = useState(0);
-
   const calculate = () => {
     const newInterest = interestRate / 100;
     const total = ((purchasePrice - deposit) * newInterest) / (yearsToPay * 12);
     setTotalMonthlyRepayment(Math.round(total));
   };
-
   return (
     <View>
       <ScrollView keyboardShouldPersistTaps="handled">
         <Text style={styles.titleStyle}>BOND PAYMENT CALCULATOR</Text>
-
         <CalculatorGroup
           label="Purchase Price"
           min={0}
@@ -29,7 +25,6 @@ const CalculatorScreen = () => {
           step={10000}
           onValChanged={setPurchasePrice}
         />
-
         <CalculatorGroup
           label="Years to pay"
           min={5}
@@ -37,7 +32,6 @@ const CalculatorScreen = () => {
           step={5}
           onValChanged={setYearsToPay}
         />
-
         <CalculatorGroup
           label="Interest rate"
           min={7}
@@ -45,7 +39,6 @@ const CalculatorScreen = () => {
           step={0.1}
           onValChanged={setInterestRate}
         />
-
         <Text style={styles.textStyle}>Deposit</Text>
         <View style={styles.textInputContainer}>
           <TextInput
@@ -53,7 +46,6 @@ const CalculatorScreen = () => {
             onChangeText={(input) => setDeposit(input)}
           />
         </View>
-
         <CalculateButton calculate={calculate} />
       </ScrollView>
       {totalMonthlyRepayment ? (
@@ -62,7 +54,6 @@ const CalculatorScreen = () => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   titleStyle: {
     fontSize: 15,
@@ -72,10 +63,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 50,
   },
-  textStyle: {
-    color: "gray",
-    marginHorizontal: 30,
-  },
+  textStyle: { color: "gray", marginHorizontal: 30 },
   textInputContainer: {
     height: 35,
     borderWidth: 1,
@@ -84,10 +72,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     paddingStart: 5,
   },
-  errorMessage: {
-    color: "red",
-    marginHorizontal: 30,
-  },
+  errorMessage: { color: "red", marginHorizontal: 30 },
 });
-
 export default CalculatorScreen;
